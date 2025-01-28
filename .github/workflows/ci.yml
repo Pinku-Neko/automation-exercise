@@ -53,6 +53,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Download coverage data
         uses: actions/download-artifact@v4
         with:
@@ -71,7 +74,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install coverage
+          pip install -r requirements.txt
 
       - name: Generate coverage report
         run: coverage report
