@@ -71,7 +71,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r ../requirements.txt
+          pip install coverage
 
       - name: Generate coverage report
         run: coverage report
