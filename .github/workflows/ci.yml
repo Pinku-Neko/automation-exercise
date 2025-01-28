@@ -20,7 +20,7 @@ jobs:
       - name: Run black in check mode
         uses: psf/black@stable
         with:
-          options: --check --verbose
+          options: --check --diff
 
   test:
     runs-on: ubuntu-latest
