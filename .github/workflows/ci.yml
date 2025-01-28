@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest coverage
+          pip install -r requirements.txt
 
       - name: Run tests and collect coverage
         run: coverage run -m pytest
@@ -61,8 +61,9 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install coverage
-        run: pip install coverage
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
       - name: Generate coverage report
         run: coverage report
