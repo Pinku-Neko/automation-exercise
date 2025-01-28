@@ -1,0 +1,78 @@
+name: Python CI Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run black in check mode
+        uses: psf/black@stable
+        with:
+          options: --check --verbose
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install pytest coverage
+
+      - name: Run tests and collect coverage
+        run: coverage run -m pytest
+
+      - name: Save coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data
+          path: .coverage
+          retention-days: 1
+
+  coverage_report:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Download coverage data
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-data
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install coverage
+        run: pip install coverage
+
+      - name: Generate coverage report
+        run: coverage report
+
+      - name: Generate XML of coverage report
+        run: coverage xml
+
+      - name: Save XML
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+          retention-days: 14
