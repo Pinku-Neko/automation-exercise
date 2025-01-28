@@ -40,6 +40,12 @@ jobs:
       - name: Run tests and collect coverage
         run: coverage run -m pytest
 
+      - name: Debug working directory
+        run: pwd
+      
+      - name: Check for .coverage file
+        run: ls -a
+
       - name: Save coverage data
         uses: actions/upload-artifact@v4
         with:
