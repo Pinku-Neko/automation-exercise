@@ -51,7 +51,9 @@ jobs:
         with:
           name: coverage-data
           path: .coverage
+          include-hidden-files: true
           retention-days: 1
+
 
   coverage_report:
     runs-on: ubuntu-latest
